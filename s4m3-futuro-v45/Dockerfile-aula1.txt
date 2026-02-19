@@ -1,0 +1,10 @@
+# Download de uma imagem linux com Java para se o executor do nosso código
+FROM eclipse-temurin:25-jre-alpine
+MAINTAINER andre
+
+# copia qualquer arquivo .jar para dentro da imagem como um app.jar
+COPY target/*.jar app.jar
+
+# Comando de execução do programa
+# java -jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]

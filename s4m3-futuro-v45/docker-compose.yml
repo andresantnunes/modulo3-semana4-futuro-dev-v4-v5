@@ -1,0 +1,38 @@
+
+services: # serviços sendo criados
+  api:    # nome de um serviço
+    build: . # local do build, usa o Dockerfile
+    container_name: hello-app
+    ports:
+      - "8080:8080" # 8080 interno é igual ao 8080 externo
+    environment: # variáveis de ambiente
+      - SPRING_APPLICATION_NAME=todo_app # Toda variável de ambiente sobrepoem o application.properties
+    networks: # Docker cria uma rede própria
+      - todo-network
+  db:
+    image: postgres:16-alpine
+    container_name: hello-postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=todo_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes: # Volume que armazena os dados do Postgres
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-network
+    # Healthcheck é crucial para que o Java não tente conectar antes do banco estar de pé
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks: # define a rede que os containeres tem acesso dentro do docker
+  todo-network:
+    driver: bridge
