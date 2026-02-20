@@ -15,6 +15,9 @@ COPY mvnw pom.xml ./
 # app/src/ todos os arquivos do projeto
 COPY src ./src
 
+# Muda a permissão do mvnw para ser executável
+RUN chmod +x mvnw
+
 # Executa comandos Linux
 # clean package
 RUN ./mvnw clean package -DskipTests
