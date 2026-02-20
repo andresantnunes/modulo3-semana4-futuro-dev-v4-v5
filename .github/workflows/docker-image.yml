@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build ./s4m3-futuro-v45/ --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build ./s4m3-futuro-v45/ --file ./s4m3-futuro-v45/Dockerfile --tag my-image-name:$(date +%s)
