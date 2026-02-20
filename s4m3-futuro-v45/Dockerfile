@@ -12,9 +12,6 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
-# Se não houver mudanças no POM, não precisa baixar nada novo
-RUN ./mvnw dependency:go-offline
-
 # app/src/ todos os arquivos do projeto
 COPY src ./src
 
